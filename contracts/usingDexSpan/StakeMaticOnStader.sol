@@ -26,6 +26,16 @@ contract StaderMaticStaker {
         _stakeStaderPool(user, amount);
     }
 
+ function handleMessage(
+        address tokenSent,
+        uint256 amount,
+        bytes memory instruction
+    ) external {
+        address user = abi.decode(instruction, (address));
+        _stakeStaderPool(user, amount);
+    }
+
+
     function _stakeStaderPool (address _receiver, uint256 amount) internal {
         STADER_POOL.swapMaticForMaticXViaInstantPool{value : amount}();
         uint receivedMATICx = IERC20(MATICx).balanceOf(address(this));
