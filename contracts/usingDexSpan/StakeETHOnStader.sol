@@ -15,19 +15,30 @@ contract StaderEthStaker {
 
     event EthXReceived(address _receiver, uint256 returnAmount);
 
+    function handleInstruction(
+        address tokenSent,
+        uint256 amount,
+        bytes memory instruction
+    ) external {
+        require(amount > 0, "not enough amount to stake");
+        
+        address user = abi.decode(instruction, (address));
+        _stakeStaderPool(user, amount);
+    }
+
     function handleMessage(
         address tokenSent,
         uint256 amount,
-        bytes memory message
+        bytes memory instruction
     ) external {
         require(amount > 0, "not enough amount to stake");
 
-        address user = abi.decode(message, (address));
+        address user = abi.decode(instruction, (address));
 
-        _callStaderPool(user, amount);
+        _stakeStaderPool(user, amount);
     }
 
-    function _callStaderPool (address _receiver, uint256 amount) internal {
+    function _stakeStaderPool (address _receiver, uint256 amount) internal {
         uint256 initialBalETHx = IERC20(ETHX).balanceOf(_receiver);
 
         STADER_POOL.deposit{value : amount}(_receiver);
