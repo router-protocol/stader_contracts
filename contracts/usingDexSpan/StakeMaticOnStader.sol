@@ -26,7 +26,7 @@ contract StaderMaticStaker {
         _stakeStaderPool(user, amount);
     }
 
- function handleMessage(
+    function handleMessage(
         address tokenSent,
         uint256 amount,
         bytes memory instruction

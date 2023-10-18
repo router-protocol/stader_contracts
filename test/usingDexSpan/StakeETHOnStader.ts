@@ -14,8 +14,8 @@ describe("STAKE ETH ON STADER: ", async () => {
       const signers = await ethers.getSigners();
       owner = signers[0];
       
-      const StakeOnStaderContract = await ethers.getContractFactory("StakeETHOnStader");
-      const stakeOnStader = await StakeOnStaderContract.deploy(await owner.getAddress());
+      const StakeOnStaderContract = await ethers.getContractFactory("StaderEthStaker");
+      const stakeOnStader = await StakeOnStaderContract.deploy();
 
       return {
         stakeOnStader,
